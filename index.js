@@ -44,5 +44,11 @@ passport.deserializeUser((obj, done)=>{
     done(null, obj);
 });
 
+app.get('/login',
+    passport.authenticate('auth0',
+        {successRedirect: '/students', failureRedirect: '/login', connection: 'github'}
+    )
+);
+
 
 app.listen( SERVER_PORT, () => { console.log(`Server listening on port ${SERVER_PORT}`); } );
