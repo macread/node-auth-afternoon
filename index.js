@@ -1,5 +1,7 @@
 require('dotenv').config();
 
+const students = require('./students')
+
 const express = require('express');
 const session = require('express-session');
 
@@ -49,6 +51,11 @@ app.get('/login',
         {successRedirect: '/students', failureRedirect: '/login', connection: 'github'}
     )
 );
+
+app.get('/students', (req, res, next) => {
+    res.status(200).send(students);
+});
+
 
 
 app.listen( SERVER_PORT, () => { console.log(`Server listening on port ${SERVER_PORT}`); } );
