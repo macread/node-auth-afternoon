@@ -3,7 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 
-const passpport = require('passport');
+const passport = require('passport');
 const Auth0Strategy = require('passport-auth0');
 
 
@@ -36,6 +36,13 @@ passport.use(new Auth0Strategy({
     done(null, profile);
 }))
 
+passport.serializeUser((user, done)=>{
+    done(null, { clientID: user.id, email: user._json.email, name: user._json.name});
+});
+
+passport.deserializeUser((obj, done)=>{
+    done(null, obj);
+});
 
 
 app.listen( SERVER_PORT, () => { console.log(`Server listening on port ${SERVER_PORT}`); } );
